@@ -1,4 +1,6 @@
 # java-jmh-benchmarks
-How to use:
+How to execute:
+
 `mvn clean install`
+
 `java -jar target/benchmarks.jar`
