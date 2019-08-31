@@ -29,7 +29,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.nichiporenko.tests;
+package com.nichiporenko.benchmarks;
 
 import org.openjdk.jmh.annotations.*;
 
