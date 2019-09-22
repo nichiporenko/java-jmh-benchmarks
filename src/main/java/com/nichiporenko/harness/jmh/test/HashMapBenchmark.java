@@ -29,7 +29,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.nichiporenko.test.harness.jmh;
+package com.nichiporenko.harness.jmh.test;
 
 import org.openjdk.jmh.annotations.*;
 
