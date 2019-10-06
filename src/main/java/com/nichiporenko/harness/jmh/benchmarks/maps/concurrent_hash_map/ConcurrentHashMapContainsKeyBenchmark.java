@@ -1,14 +1,13 @@
-package com.nichiporenko.harness.jmh.benchmarks;
+package com.nichiporenko.harness.jmh.benchmarks.maps.concurrent_hash_map;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import static com.nichiporenko.harness.jmh.util.RandomUtils.generateRandomString;
+import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
 
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -16,28 +15,27 @@ import static com.nichiporenko.harness.jmh.util.RandomUtils.generateRandomString
 @Warmup(time = 1, iterations = 5)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 1, value = 1)
-public class HashMapBenchmark {
+public class ConcurrentHashMapContainsKeyBenchmark {
     private Map<String, String> map;
 
-    @Param(value = {"0", "1000", "100000", "1000000"})
+    @Param(value = {"0", "1", "1000", "100000", "1000000"})
     private int MAP_ENTRIES_COUNT;
 
     @Setup
     public void prepare() {
-        map = new HashMap<>();
+        map = new ConcurrentHashMap<>();
+
         for (int i = 0; i < MAP_ENTRIES_COUNT; i++) {
+            if (i == MAP_ENTRIES_COUNT - 1) {
+                map.put("Dmitry", "found");
+                continue;
+            }
             map.put(generateRandomString(20), "0");
         }
-        map.put("Dmitry", "found");
     }
 
     @Benchmark
-    public void normal(Blackhole blackhole) {
-        blackhole.consume(map.get("Dmitry")); // blackhole used to prevent dead code elimination optimization
-    }
-
-    @Benchmark
-    public void eliminated() {
-        map.get("Dmitry");
+    public void normal(final Blackhole blackhole) {
+        blackhole.consume(map.containsKey("Dmitry"));
     }
 }
