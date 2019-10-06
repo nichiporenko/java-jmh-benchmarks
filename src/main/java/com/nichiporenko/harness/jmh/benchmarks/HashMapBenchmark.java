@@ -1,10 +1,13 @@
 package com.nichiporenko.harness.jmh.benchmarks;
 
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
 
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -15,20 +18,25 @@ import java.util.concurrent.TimeUnit;
 public class HashMapBenchmark {
     private Map<String, String> map;
 
+    @Param(value = {"1", "1000", "100000", "1000000"})
+    private int MAP_ENTRIES_COUNT;
+
     @Setup
     public void prepare() {
         map = new HashMap<>();
-        map.put("Dmitry", "Best of the best");
+        for (int i = 0; i < MAP_ENTRIES_COUNT - 1; i++) {
+            map.put(generateRandomString(20), "0");
+        }
+        map.put("Dmitry", "found");
     }
 
     @Benchmark
-    public String normal() {
-        return map.get("Dmitry");
+    public void normal(Blackhole blackhole) {
+        blackhole.consume(map.get("Dmitry"));
     }
 
     @Benchmark
     public void eliminated() {
         map.get("Dmitry");
     }
-
 }
