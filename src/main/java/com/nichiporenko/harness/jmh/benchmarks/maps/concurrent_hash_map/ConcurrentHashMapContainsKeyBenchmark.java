@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY_LENGTH;
 import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
 
 @State(value = Scope.Thread)
@@ -19,18 +20,18 @@ public class ConcurrentHashMapContainsKeyBenchmark {
     private Map<String, String> map;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int MAP_ENTRIES_COUNT;
+    private int ENTRIES_BEFORE;
 
     @Setup
     public void prepare() {
         map = new ConcurrentHashMap<>();
 
-        for (int i = 0; i < MAP_ENTRIES_COUNT; i++) {
-            if (i == MAP_ENTRIES_COUNT - 1) {
+        for (int i = 0; i < ENTRIES_BEFORE; i++) {
+            if (i == ENTRIES_BEFORE - 1) {
                 map.put("Dmitry", "found");
                 continue;
             }
-            map.put(generateRandomString(20), "0");
+            map.put(generateRandomString(MAPS_KEY_LENGTH), "0");
         }
     }
 

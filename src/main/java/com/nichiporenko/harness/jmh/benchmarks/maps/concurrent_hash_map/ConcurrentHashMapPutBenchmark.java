@@ -3,11 +3,11 @@ package com.nichiporenko.harness.jmh.benchmarks.maps.concurrent_hash_map;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY_LENGTH;
 import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
 
 @State(value = Scope.Thread)
@@ -24,26 +24,26 @@ public class ConcurrentHashMapPutBenchmark {
     private int ENTRIES_BEFORE;
 
     @Param(value = {"100000"})
-    private int ENTRIES_TO_PUT;
+    private int ENTRIES_PUT;
 
     @Setup(Level.Invocation)
     public void preparePut() {
         map.clear();
 
         for (int i = 0; i < ENTRIES_BEFORE; i++) {
-            map.put(generateRandomString(20), "0");
+            map.put(generateRandomString(MAPS_KEY_LENGTH), "0");
         }
 
-        keys = new String[ENTRIES_TO_PUT];
+        keys = new String[ENTRIES_PUT];
 
-        for (int i = 0; i < ENTRIES_TO_PUT; i++) {
-            keys[i] = generateRandomString(20);
+        for (int i = 0; i < ENTRIES_PUT; i++) {
+            keys[i] = generateRandomString(MAPS_KEY_LENGTH);
         }
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ENTRIES_TO_PUT; i++) {
+        for (int i = 0; i < ENTRIES_PUT; i++) {
             blackhole.consume(map.put(keys[i], "value"));
         }
     }

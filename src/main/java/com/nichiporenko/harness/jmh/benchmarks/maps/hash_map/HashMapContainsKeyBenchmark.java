@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY_LENGTH;
 import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
 
 @State(value = Scope.Thread)
@@ -30,7 +31,7 @@ public class HashMapContainsKeyBenchmark {
                 map.put("Dmitry", "found");
                 continue;
             }
-            map.put(generateRandomString(20), "0");
+            map.put(generateRandomString(MAPS_KEY_LENGTH), "0");
         }
     }
 
