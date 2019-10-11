@@ -13,7 +13,7 @@ java -jar target/benchmarks.jar ".*HashMapGet.*"
 ```
 
 ## Benchmarks results:
-### 1. Executing containsKey()
+### 1. Executing get()
 ```
 Benchmark                                 (ENTRIES_BEFORE)   Mode  Cnt   Score   Error  Units
 
@@ -47,7 +47,7 @@ TreeMapGetBenchmark                                   1000   avgt   25  36.065  
 TreeMapGetBenchmark                                 100000   avgt   25  53.743   1.653  ns/op
 TreeMapGetBenchmark                                1000000   avgt   25  72.607   4.739  ns/op
 ```
-### 2. Executing get()
+### 2. Executing containsKey()
 ```
 Benchmark                                 (ENTRIES_BEFORE)   Mode  Cnt   Score   Error  Units
 
