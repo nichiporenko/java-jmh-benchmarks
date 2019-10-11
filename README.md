@@ -12,7 +12,7 @@ mvn clean install
 java -jar target/benchmarks.jar ".*HashMapGet.*"
 ```
 
-## Benchmarks results (with 5 forks):
+## Benchmarks results (in 5 forks):
 ### Maps
 #### 1. Executing get()
 ```
