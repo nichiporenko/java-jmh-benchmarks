@@ -12,7 +12,7 @@ mvn clean install
 java -jar target/benchmarks.jar ".*HashMapGet.*"
 ```
 
-## Maps benchmarks results:
+## Map benchmarks results:
 ### 1. Executing get()
 ```
 Benchmark                                 (ENTRIES_BEFORE)   Mode  Cnt   Score   Error  Units
