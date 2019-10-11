@@ -24,7 +24,7 @@ public class LinkedHashMapPutBenchmark {
     private int ENTRIES_BEFORE;
 
     @Param(value = {"100000"})
-    private int ENTRIES_TO_PUT;
+    private int ENTRIES_PUT;
 
     @Setup(Level.Invocation)
     public void preparePut() {
@@ -34,16 +34,16 @@ public class LinkedHashMapPutBenchmark {
             map.put(generateRandomString(MAPS_KEY_LENGTH), "0");
         }
 
-        keys = new String[ENTRIES_TO_PUT];
+        keys = new String[ENTRIES_PUT];
 
-        for (int i = 0; i < ENTRIES_TO_PUT; i++) {
+        for (int i = 0; i < ENTRIES_PUT; i++) {
             keys[i] = generateRandomString(MAPS_KEY_LENGTH);
         }
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ENTRIES_TO_PUT; i++) {
+        for (int i = 0; i < ENTRIES_PUT; i++) {
             blackhole.consume(map.put(keys[i], "value"));
         }
     }
