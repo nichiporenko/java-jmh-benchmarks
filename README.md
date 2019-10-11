@@ -12,8 +12,9 @@ mvn clean install
 java -jar target/benchmarks.jar ".*HashMapGet.*"
 ```
 
-## Map benchmarks results:
-### 1. Executing get()
+## Benchmarks results (with 5 forks):
+### Maps
+#### 1. Executing get()
 ```
 Benchmark                                 (ENTRIES_BEFORE)   Mode  Cnt   Score   Error  Units
 
@@ -47,7 +48,7 @@ TreeMapGetBenchmark                                   1000   avgt   25  36.065  
 TreeMapGetBenchmark                                 100000   avgt   25  53.743   1.653  ns/op
 TreeMapGetBenchmark                                1000000   avgt   25  72.607   4.739  ns/op
 ```
-### 2. Executing containsKey()
+#### 2. Executing containsKey()
 ```
 Benchmark                                 (ENTRIES_BEFORE)   Mode  Cnt   Score   Error  Units
 
@@ -81,7 +82,7 @@ TreeMapContainsKeyBenchmark                           1000   avgt   25  35.379  
 TreeMapContainsKeyBenchmark                         100000   avgt   25  53.702   4.840  ns/op
 TreeMapContainsKeyBenchmark                        1000000   avgt   25  70.729   4.281  ns/op
 ```
-### 3. Executing put()
+#### 3. Executing put()
 ```
 Benchmark                                 (ENTRIES_BEFORE)   (ENTRIES_PUT)   Mode  Cnt   Score   Error  Units
 
