@@ -1,14 +1,14 @@
-package com.nichiporenko.harness.jmh.benchmarks.maps.tree_map;
+package com.nichiporenko.harness.jmh.benchmarks.maps.concurrent_skip_list_map;
 
 import com.nichiporenko.harness.jmh.benchmarks.maps.BasicMap;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.TimeUnit;
 
-import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY;
+import static com.nichiporenko.harness.jmh.utils.Constants.*;
 
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -16,7 +16,7 @@ import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY;
 @Warmup(time = 1, iterations = 5)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 1, value = 1)
-public class TreeMapGetBenchmark implements BasicMap {
+public class ConcurrentSkipListMapContainsKeyBenchmark implements BasicMap {
     private Map<String, String> map;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
@@ -24,12 +24,12 @@ public class TreeMapGetBenchmark implements BasicMap {
 
     @Setup
     public void prepare() {
-        map = new TreeMap<>();
+        map = new ConcurrentSkipListMap<>();
         fillMapWithLastSpecified(map, ENTRIES_BEFORE);
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        blackhole.consume(map.get(MAPS_KEY));
+        blackhole.consume(map.containsKey(MAPS_KEY));
     }
 }

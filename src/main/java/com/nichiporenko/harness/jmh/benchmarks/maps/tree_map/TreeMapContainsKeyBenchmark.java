@@ -1,5 +1,6 @@
 package com.nichiporenko.harness.jmh.benchmarks.maps.tree_map;
 
+import com.nichiporenko.harness.jmh.benchmarks.maps.BasicMap;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -7,8 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY_LENGTH;
-import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
+import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY;
 
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -16,7 +16,7 @@ import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomStrin
 @Warmup(time = 1, iterations = 5)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 1, value = 1)
-public class TreeMapContainsKeyBenchmark {
+public class TreeMapContainsKeyBenchmark implements BasicMap {
     private Map<String, String> map;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
@@ -25,18 +25,11 @@ public class TreeMapContainsKeyBenchmark {
     @Setup
     public void prepare() {
         map = new TreeMap<>();
-
-        for (int i = 0; i < ENTRIES_BEFORE; i++) {
-            if (i == ENTRIES_BEFORE - 1) {
-                map.put("Dmitry", "found");
-                continue;
-            }
-            map.put(generateRandomString(MAPS_KEY_LENGTH), "0");
-        }
+        fillMapWithLastSpecified(map, ENTRIES_BEFORE);
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        blackhole.consume(map.containsKey("Dmitry"));
+        blackhole.consume(map.containsKey(MAPS_KEY));
     }
 }

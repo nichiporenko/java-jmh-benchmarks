@@ -1,5 +1,6 @@
 package com.nichiporenko.harness.jmh.benchmarks.maps.linked_hash_map;
 
+import com.nichiporenko.harness.jmh.benchmarks.maps.BasicMap;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -7,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.nichiporenko.harness.jmh.utils.Constants.COLLECTIONS_VALUE;
 import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY_LENGTH;
 import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomString;
 
@@ -16,8 +18,8 @@ import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomStrin
 @Warmup(time = 1, iterations = 5)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 1, value = 1)
-public class LinkedHashMapPutBenchmark {
-    private Map<String, String> map = new LinkedHashMap<>();
+public class LinkedHashMapPutBenchmark implements BasicMap {
+    private Map<String, String> map;
     private String[] keys;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
@@ -28,23 +30,15 @@ public class LinkedHashMapPutBenchmark {
 
     @Setup(Level.Invocation)
     public void preparePut() {
-        map.clear();
-
-        for (int i = 0; i < ENTRIES_BEFORE; i++) {
-            map.put(generateRandomString(MAPS_KEY_LENGTH), "0");
-        }
-
-        keys = new String[ENTRIES_PUT];
-
-        for (int i = 0; i < ENTRIES_PUT; i++) {
-            keys[i] = generateRandomString(MAPS_KEY_LENGTH);
-        }
+        map = new LinkedHashMap<>();
+        fillMap(map, ENTRIES_BEFORE);
+        keys = generateKeysForPutting(ENTRIES_PUT);
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
         for (int i = 0; i < ENTRIES_PUT; i++) {
-            blackhole.consume(map.put(keys[i], "value"));
+            blackhole.consume(map.put(keys[i], COLLECTIONS_VALUE));
         }
     }
 }
