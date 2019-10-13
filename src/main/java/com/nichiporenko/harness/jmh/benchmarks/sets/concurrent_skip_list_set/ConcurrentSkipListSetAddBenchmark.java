@@ -1,11 +1,11 @@
-package com.nichiporenko.harness.jmh.benchmarks.lists.linked_list;
+package com.nichiporenko.harness.jmh.benchmarks.sets.concurrent_skip_list_set;
 
-import com.nichiporenko.harness.jmh.benchmarks.lists.BasicList;
+import com.nichiporenko.harness.jmh.benchmarks.sets.BasicSet;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.TimeUnit;
 
 @State(value = Scope.Thread)
@@ -14,27 +14,27 @@ import java.util.concurrent.TimeUnit;
 @Warmup(time = 1, iterations = 5)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 1, value = 1)
-public class LinkedListPutBenchmark implements BasicList {
-    private List<String> list;
+public class ConcurrentSkipListSetAddBenchmark implements BasicSet {
+    private Set<String> set;
     private String[] items;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ENTRIES_BEFORE;
+    private int ITEMS_BEFORE;
 
     @Param(value = {"100000"})
-    private int ENTRIES_PUT;
+    private int ITEMS_ADD;
 
     @Setup(Level.Invocation)
     public void preparePut() {
-        list = new LinkedList<>();
-        fillList(list, ENTRIES_BEFORE);
-        items = generateItemsForPutting(ENTRIES_PUT);
+        set = new ConcurrentSkipListSet<>();
+        fillSet(set, ITEMS_BEFORE);
+        items = generateItemsForAdding(ITEMS_ADD);
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ENTRIES_PUT; i++) {
-            blackhole.consume(list.add(items[i]));
+        for (int i = 0; i < ITEMS_ADD; i++) {
+            blackhole.consume(set.add(items[i]));
         }
     }
 }

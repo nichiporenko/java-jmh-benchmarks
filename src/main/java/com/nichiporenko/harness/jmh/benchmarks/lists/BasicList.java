@@ -24,7 +24,7 @@ public interface BasicList {
         }
     }
 
-    default String[] generateItemsForPutting(int numberOfItems) {
+    default String[] generateItemsForAdding(int numberOfItems) {
         String[] items = new String[numberOfItems];
 
         for (int i = 0; i < numberOfItems; i++) {

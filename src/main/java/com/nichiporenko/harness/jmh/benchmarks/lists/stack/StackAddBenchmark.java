@@ -1,11 +1,11 @@
-package com.nichiporenko.harness.jmh.benchmarks.lists.array_list;
+package com.nichiporenko.harness.jmh.benchmarks.lists.stack;
 
 import com.nichiporenko.harness.jmh.benchmarks.lists.BasicList;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
 @State(value = Scope.Thread)
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Warmup(time = 1, iterations = 5)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 1, value = 1)
-public class ArrayListPutBenchmark implements BasicList {
+public class StackAddBenchmark implements BasicList {
     private List<String> list;
     private String[] items;
 
@@ -22,18 +22,18 @@ public class ArrayListPutBenchmark implements BasicList {
     private int ENTRIES_BEFORE;
 
     @Param(value = {"100000"})
-    private int ENTRIES_PUT;
+    private int ENTRIES_ADD;
 
     @Setup(Level.Invocation)
     public void preparePut() {
-        list = new ArrayList<>();
+        list = new Stack<>();
         fillList(list, ENTRIES_BEFORE);
-        items = generateItemsForPutting(ENTRIES_PUT);
+        items = generateItemsForAdding(ENTRIES_ADD);
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ENTRIES_PUT; i++) {
+        for (int i = 0; i < ENTRIES_ADD; i++) {
             blackhole.consume(list.add(items[i]));
         }
     }
