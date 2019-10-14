@@ -1,5 +1,7 @@
 # JMH benchmarks
 Java Microbenchmark Harness benchmarks.
+
+Not important values for lists, sets and keys for maps are generated randomly.
 ## Running benchmarks:
 ### 1. With a specified number of forks
 ```
