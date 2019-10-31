@@ -1,4 +1,4 @@
-package com.nichiporenko.harness.jmh.regular_expressions;
+package com.nichiporenko.harness.jmh.benchmarks.regular_expressions;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
