@@ -2,7 +2,7 @@ package com.nichiporenko.harness.jmh.utils;
 
 import java.security.SecureRandom;
 
-public class RandomUtils {
+public final class RandomUtils {
     private static final String RANDOM_LETTERS_LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String RANDOM_LETTERS_UPPER = RANDOM_LETTERS_LOWER.toUpperCase();
     private static final String RANDOM_DIGITS = "0123456789";
