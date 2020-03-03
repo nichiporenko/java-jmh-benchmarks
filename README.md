@@ -1,5 +1,5 @@
 # JMH benchmarks
-Java Microbenchmark Harness benchmarks.
+Collection of Java Microbenchmark Harness benchmarks.
 
 https://openjdk.java.net/projects/code-tools/jmh/
 
