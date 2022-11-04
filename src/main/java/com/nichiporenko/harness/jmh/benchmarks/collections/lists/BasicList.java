@@ -13,9 +13,9 @@ import static com.nichiporenko.harness.jmh.utils.RandomUtils.generateRandomStrin
  */
 public interface BasicList {
 
-    default void fillListWithLastSpecified(List<String> list, int numberOfItems) {
-        for (int i = 0; i < numberOfItems; i++) {
-            if (i == numberOfItems - 1) {
+    default void fillListWithLastSpecified(List<String> list, int numOfEntries) {
+        for (int i = 0; i < numOfEntries; i++) {
+            if (i == numOfEntries - 1) {
                 list.add(COLLECTIONS_VALUE);
                 continue;
             }
@@ -23,18 +23,18 @@ public interface BasicList {
         }
     }
 
-    default void fillList(List<String> list, int numberOfItems) {
-        for (int i = 0; i < numberOfItems; i++) {
+    default void fillStringsList(List<String> list, int numOfEntries) {
+        for (int i = 0; i < numOfEntries; i++) {
             list.add(generateRandomString(LISTS_ITEM_LENGTH));
         }
     }
 
-    default String[] generateItemsForAdding(int numberOfItems) {
-        String[] items = new String[numberOfItems];
+    default String[] generateStringsToAdd(int numOfEntries) {
+        String[] entries = new String[numOfEntries];
 
-        for (int i = 0; i < numberOfItems; i++) {
-            items[i] = generateRandomString(LISTS_ITEM_LENGTH);
+        for (int i = 0; i < numOfEntries; i++) {
+            entries[i] = generateRandomString(LISTS_ITEM_LENGTH);
         }
-        return items;
+        return entries;
     }
 }

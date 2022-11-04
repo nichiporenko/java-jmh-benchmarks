@@ -17,29 +17,29 @@ import java.util.concurrent.TimeUnit;
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Warmup(time = 1, iterations = 5)
+@Warmup(time = 1, iterations = 3)
 @Measurement(time = 1, iterations = 5)
-@Fork(warmups = 1, value = 1)
+@Fork(warmups = 0, value = 1)
 public class LinkedListAddBenchmark implements BasicList {
     private List<String> list;
     private String[] items;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ENTRIES_BEFORE;
+    private int numEntriesPrefilled;
 
     @Param(value = {"100000"})
-    private int ENTRIES_ADD;
+    private int numEntriesToAdd;
 
     @Setup(Level.Invocation)
     public void preparePut() {
         list = new LinkedList<>();
-        fillList(list, ENTRIES_BEFORE);
-        items = generateItemsForAdding(ENTRIES_ADD);
+        fillStringsList(list, numEntriesPrefilled);
+        items = generateStringsToAdd(numEntriesToAdd);
     }
 
     @Benchmark
     public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ENTRIES_ADD; i++) {
+        for (int i = 0; i < numEntriesToAdd; i++) {
             blackhole.consume(list.add(items[i]));
         }
     }

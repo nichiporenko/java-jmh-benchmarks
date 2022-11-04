@@ -19,15 +19,15 @@ import static com.nichiporenko.harness.jmh.utils.Constants.COLLECTIONS_VALUE;
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Warmup(time = 1, iterations = 5)
+@Warmup(time = 1, iterations = 3)
 @Measurement(time = 1, iterations = 5)
-@Fork(warmups = 1, value = 1)
+@Fork(warmups = 0, value = 1)
 public class HashtablePutBenchmark implements BasicMap {
     private Map<String, String> map;
     private String[] keys;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ENTRIES_BEFORE;
+    private int numEntriesPrefilled;
 
     @Param(value = {"100000"})
     private int ENTRIES_PUT;
@@ -35,7 +35,7 @@ public class HashtablePutBenchmark implements BasicMap {
     @Setup(Level.Invocation)
     public void preparePut() {
         map = new Hashtable<>();
-        fillMap(map, ENTRIES_BEFORE);
+        fillMap(map, numEntriesPrefilled);
         keys = generateKeysForPutting(ENTRIES_PUT);
     }
 

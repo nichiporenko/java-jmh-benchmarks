@@ -19,19 +19,19 @@ import static com.nichiporenko.harness.jmh.utils.Constants.MAPS_KEY;
 @State(value = Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(time = 1, iterations = 5)
+@Warmup(time = 1, iterations = 3)
 @Measurement(time = 1, iterations = 5)
-@Fork(warmups = 1, value = 1)
+@Fork(warmups = 0, value = 1)
 public class LinkedHashMapGetBenchmark implements BasicMap {
     private Map<String, String> map;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ENTRIES_BEFORE;
+    private int numEntriesPrefilled;
 
     @Setup
     public void prepare() {
         map = new LinkedHashMap<>();
-        fillMapWithLastSpecified(map, ENTRIES_BEFORE);
+        fillMapWithLastSpecified(map, numEntriesPrefilled);
     }
 
     @Benchmark

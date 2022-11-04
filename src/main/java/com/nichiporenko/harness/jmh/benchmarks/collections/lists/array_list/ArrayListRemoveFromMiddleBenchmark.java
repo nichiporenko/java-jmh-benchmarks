@@ -1,16 +1,16 @@
-package com.nichiporenko.harness.jmh.benchmarks.collections.lists.copy_on_write_array_list;
+package com.nichiporenko.harness.jmh.benchmarks.collections.lists.array_list;
 
 import com.nichiporenko.harness.jmh.benchmarks.collections.lists.BasicList;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The benchmark tests the average execution time of <b>get</b> operation
- * for the {@link CopyOnWriteArrayList} with different initial number of items.
+ * The benchmark tests the average execution time of <b>remove</b> operation
+ * from the middle for the {@link ArrayList} with different initial number of items.
  *
  * @author Dmitry Nichiporenko
  */
@@ -20,20 +20,20 @@ import java.util.concurrent.TimeUnit;
 @Warmup(time = 1, iterations = 3)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 0, value = 1)
-public class CopyOnWriteArrayListGetBenchmark implements BasicList {
+public class ArrayListRemoveFromMiddleBenchmark implements BasicList {
     private List<String> list;
 
     @Param(value = {"1", "1000", "100000", "1000000"})
     private int numEntriesPrefilled;
 
-    @Setup
-    public void prepare() {
-        list = new CopyOnWriteArrayList<>();
+    @Setup(Level.Invocation)
+    public void setup() {
+        list = new ArrayList<>();
         fillListWithLastSpecified(list, numEntriesPrefilled);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
-        blackhole.consume(list.get(numEntriesPrefilled - 1));
+    public void run(Blackhole bh) {
+        bh.consume(list.remove(numEntriesPrefilled / 2));
     }
 }
