@@ -41,21 +41,21 @@ public class RegexComplexMatchesBenchmark {
     }
 
     @Benchmark
-    public void complexNonCapturing(final Blackhole blackhole) {
+    public void complexNonCapturing(Blackhole blackhole) {
         for (String ip : ipAddresses) {
             blackhole.consume(PATTERN_NON_CAPTURING.matcher(ip).matches());
         }
     }
 
     @Benchmark
-    public void complexCapturing(final Blackhole blackhole) {
+    public void complexCapturing(Blackhole blackhole) {
         for (String ip : ipAddresses) {
             blackhole.consume(PATTERN_CAPTURING.matcher(ip).matches());
         }
     }
 
     @Benchmark
-    public void complexNamedCapturing(final Blackhole blackhole) {
+    public void complexNamedCapturing(Blackhole blackhole) {
         for (String ip : ipAddresses) {
             blackhole.consume(PATTERN_NAMED_CAPTURING.matcher(ip).matches());
         }

@@ -25,21 +25,21 @@ public class LinkedHashSetAddBenchmark implements BasicSet {
     private String[] items;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ITEMS_BEFORE;
+    private int numEntriesPrefilled;
 
     @Param(value = {"100000"})
-    private int ITEMS_ADD;
+    private int numEntriesToAdd;
 
     @Setup(Level.Invocation)
     public void preparePut() {
         set = new LinkedHashSet<>();
-        fillSet(set, ITEMS_BEFORE);
-        items = generateItemsForAdding(ITEMS_ADD);
+        fillSet(set, numEntriesPrefilled);
+        items = generateItemsForAdding(numEntriesToAdd);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ITEMS_ADD; i++) {
+    public void run(Blackhole blackhole) {
+        for (int i = 0; i < numEntriesToAdd; i++) {
             blackhole.consume(set.add(items[i]));
         }
     }

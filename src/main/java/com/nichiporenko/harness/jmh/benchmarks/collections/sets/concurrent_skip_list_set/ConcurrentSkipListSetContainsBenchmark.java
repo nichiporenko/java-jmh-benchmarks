@@ -26,16 +26,16 @@ public class ConcurrentSkipListSetContainsBenchmark implements BasicSet {
     private Set<String> set;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ITEMS_BEFORE;
+    private int numEntriesPrefilled;
 
-    @Setup
-    public void prepare() {
+    @Setup(Level.Trial)
+    public void setup() {
         set = new ConcurrentSkipListSet<>();
-        fillSetWithLastSpecified(set, ITEMS_BEFORE);
+        fillSetWithLastSpecified(set, numEntriesPrefilled);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
+    public void run(Blackhole blackhole) {
         blackhole.consume(set.contains(COLLECTIONS_VALUE));
     }
 }

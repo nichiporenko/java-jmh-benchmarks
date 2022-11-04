@@ -38,7 +38,7 @@ public class StackAddBenchmark implements BasicList {
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
+    public void run(Blackhole blackhole) {
         for (int i = 0; i < numEntriesToAdd; i++) {
             blackhole.consume(list.add(items[i]));
         }

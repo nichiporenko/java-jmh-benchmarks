@@ -3,6 +3,10 @@ package com.nichiporenko.harness.jmh.benchmarks.collections.sets.concurrent_skip
 import com.nichiporenko.harness.jmh.benchmarks.collections.sets.BasicSet;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -26,16 +30,24 @@ public class ConcurrentSkipListSetRemoveBenchmark implements BasicSet {
     private Set<String> set;
 
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
-    private int ITEMS_BEFORE;
+    private int numEntriesPrefilled;
 
     @Setup
-    public void prepare() {
+    public void setup() {
         set = new ConcurrentSkipListSet<>();
-        fillSetWithLastSpecified(set, ITEMS_BEFORE);
+        fillSetWithLastSpecified(set, numEntriesPrefilled);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
+    public void run(Blackhole blackhole) {
         blackhole.consume(set.remove(COLLECTIONS_VALUE));
+    }
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(ConcurrentSkipListSetRemoveBenchmark.class.getSimpleName())
+                .build();
+
+        new Runner(opt).run();
     }
 }

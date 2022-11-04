@@ -30,18 +30,18 @@ public class HashtablePutBenchmark implements BasicMap {
     private int numEntriesPrefilled;
 
     @Param(value = {"100000"})
-    private int ENTRIES_PUT;
+    private int entriesToAdd;
 
     @Setup(Level.Invocation)
     public void preparePut() {
         map = new Hashtable<>();
         fillMap(map, numEntriesPrefilled);
-        keys = generateKeysForPutting(ENTRIES_PUT);
+        keys = generateKeysForPutting(entriesToAdd);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
-        for (int i = 0; i < ENTRIES_PUT; i++) {
+    public void run(Blackhole blackhole) {
+        for (int i = 0; i < entriesToAdd; i++) {
             blackhole.consume(map.put(keys[i], COLLECTIONS_VALUE));
         }
     }

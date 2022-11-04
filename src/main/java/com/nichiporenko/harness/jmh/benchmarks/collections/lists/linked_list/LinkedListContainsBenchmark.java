@@ -28,14 +28,14 @@ public class LinkedListContainsBenchmark implements BasicList {
     @Param(value = {"0", "1", "1000", "100000", "1000000"})
     private int numEntriesPrefilled;
 
-    @Setup
-    public void prepare() {
+    @Setup(Level.Trial)
+    public void setup() {
         list = new LinkedList<>();
         fillListWithLastSpecified(list, numEntriesPrefilled);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
+    public void run(Blackhole blackhole) {
         blackhole.consume(list.contains(COLLECTIONS_VALUE));
     }
 }

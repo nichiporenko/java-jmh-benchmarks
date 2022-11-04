@@ -31,14 +31,14 @@ public class CopyOnWriteArrayListAddBenchmark implements BasicList {
     private int numEntriesToAdd;
 
     @Setup(Level.Invocation)
-    public void prepare() {
+    public void setup() {
         list = new CopyOnWriteArrayList<>();
         fillStringsList(list, numEntriesPrefilled);
         items = generateStringsToAdd(numEntriesToAdd);
     }
 
     @Benchmark
-    public void normal(final Blackhole blackhole) {
+    public void run(Blackhole blackhole) {
         for (int i = 0; i < numEntriesToAdd; i++) {
             blackhole.consume(list.add(items[i]));
         }
