@@ -35,7 +35,7 @@ public class HashSetContainsBenchmark implements BasicSet {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
-        blackhole.consume(set.contains(COLLECTIONS_VALUE));
+    public void run(Blackhole bh) {
+        bh.consume(set.contains(COLLECTIONS_VALUE));
     }
 }

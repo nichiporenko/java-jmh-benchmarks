@@ -39,8 +39,8 @@ public class ConcurrentSkipListSetRemoveBenchmark implements BasicSet {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
-        blackhole.consume(set.remove(COLLECTIONS_VALUE));
+    public void run(Blackhole bh) {
+        bh.consume(set.remove(COLLECTIONS_VALUE));
     }
 
     public static void main(String[] args) throws RunnerException {

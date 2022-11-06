@@ -35,7 +35,7 @@ public class ConcurrentSkipListMapGetBenchmark implements BasicMap {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
-        blackhole.consume(map.get(MAPS_KEY));
+    public void run(Blackhole bh) {
+        bh.consume(map.get(MAPS_KEY));
     }
 }

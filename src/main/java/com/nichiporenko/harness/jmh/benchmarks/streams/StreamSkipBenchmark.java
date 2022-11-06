@@ -21,15 +21,15 @@ import java.util.stream.IntStream;
 public class StreamSkipBenchmark {
 
     @Benchmark
-    public void sequentialSkip(Blackhole blackhole) {
-        blackhole.consume(IntStream.range(0, 100_000_000)
+    public void sequentialSkip(Blackhole bh) {
+        bh.consume(IntStream.range(0, 100_000_000)
                 .skip(99_000_000)
                 .sum());
     }
 
     @Benchmark
-    public void parallelSkip(Blackhole blackhole) {
-        blackhole.consume(IntStream.range(0, 100_000_000)
+    public void parallelSkip(Blackhole bh) {
+        bh.consume(IntStream.range(0, 100_000_000)
                 .parallel()
                 .skip(99_000_000)
                 .sum());

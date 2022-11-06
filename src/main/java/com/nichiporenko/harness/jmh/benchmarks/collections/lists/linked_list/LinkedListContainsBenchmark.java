@@ -35,7 +35,7 @@ public class LinkedListContainsBenchmark implements BasicList {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
-        blackhole.consume(list.contains(COLLECTIONS_VALUE));
+    public void run(Blackhole bh) {
+        bh.consume(list.contains(COLLECTIONS_VALUE));
     }
 }

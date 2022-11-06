@@ -38,9 +38,9 @@ public class CopyOnWriteArraySetAddBenchmark implements BasicSet {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
+    public void run(Blackhole bh) {
         for (int i = 0; i < numEntriesToAdd; i++) {
-            blackhole.consume(set.add(items[i]));
+            bh.consume(set.add(items[i]));
         }
     }
 }

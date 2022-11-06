@@ -30,36 +30,36 @@ public class ForkJoinPoolBenchmark {
     private long upperBound;
 
     @Benchmark
-    public void parallelStream(Blackhole blackhole) {
+    public void parallelStream(Blackhole bh) {
         List<Long> list = rangeClosed(1, upperBound).parallel().filter(Utils::isPrime).boxed().collect(toList());
-        blackhole.consume(list);
+        bh.consume(list);
     }
 
     @Benchmark
-    public void sequentialStream(Blackhole blackhole) {
+    public void sequentialStream(Blackhole bh) {
         List<Long> list = rangeClosed(1, upperBound).filter(Utils::isPrime).boxed().collect(toList());
-        blackhole.consume(list);
+        bh.consume(list);
     }
 
     @Benchmark
-    public void forLoop(Blackhole blackhole) {
+    public void forLoop(Blackhole bh) {
         List<Long> list = new ArrayList<>();
         for (long i = 1; i <= upperBound; i++) {
             if (Utils.isPrime(i)) {
                 list.add(i);
             }
         }
-        blackhole.consume(list);
+        bh.consume(list);
     }
 
     @Benchmark
-    public void forkJoinPoolWithParallelStream(Blackhole blackhole) throws ExecutionException, InterruptedException {
+    public void forkJoinPoolWithParallelStream(Blackhole bh) throws ExecutionException, InterruptedException {
         ForkJoinTask<List<Long>> result = forkJoinPoolCustom.submit(() -> rangeClosed(1, upperBound).parallel().filter(Utils::isPrime).boxed().collect(toList()));
-        blackhole.consume(result.get());
+        bh.consume(result.get());
     }
 
     @Benchmark
-    public void forkJoinPoolWithForLoop(Blackhole blackhole) throws ExecutionException, InterruptedException {
+    public void forkJoinPoolWithForLoop(Blackhole bh) throws ExecutionException, InterruptedException {
         ForkJoinTask<List<Long>> result = forkJoinPoolCustom.submit(() -> {
             List<Long> list = new ArrayList<>();
             for (long i = 1; i <= upperBound; i++) {
@@ -69,6 +69,6 @@ public class ForkJoinPoolBenchmark {
             }
             return list;
         });
-        blackhole.consume(result.get());
+        bh.consume(result.get());
     }
 }

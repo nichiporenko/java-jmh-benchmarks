@@ -33,7 +33,7 @@ public class StackGetBenchmark implements BasicList {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
-        blackhole.consume(list.get(numEntriesPrefilled - 1));
+    public void run(Blackhole bh) {
+        bh.consume(list.get(numEntriesPrefilled - 1));
     }
 }

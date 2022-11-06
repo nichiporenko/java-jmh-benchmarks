@@ -30,12 +30,12 @@ public class StringBuilderPrependBenchmark {
     }
 
     @Benchmark
-    public void insert(Blackhole blackhole) {
-        blackhole.consume(stringBuilder.insert(0, stringToPrepend));
+    public void insert(Blackhole bh) {
+        bh.consume(stringBuilder.insert(0, stringToPrepend));
     }
 
     @Benchmark
-    public void reverse(Blackhole blackhole) {
-        blackhole.consume(stringBuilder.reverse().append(new StringBuilder(stringToPrepend).reverse()).reverse());
+    public void reverse(Blackhole bh) {
+        bh.consume(stringBuilder.reverse().append(new StringBuilder(stringToPrepend).reverse()).reverse());
     }
 }

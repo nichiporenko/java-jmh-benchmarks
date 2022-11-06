@@ -1,16 +1,15 @@
-package com.nichiporenko.harness.jmh.benchmarks.collections.lists.vector;
+package com.nichiporenko.harness.jmh.benchmarks.collections.lists.array_list;
 
 import com.nichiporenko.harness.jmh.benchmarks.collections.lists.BasicList;
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.infra.Blackhole;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 /**
  * The benchmark tests the average execution time of 100,000 <b>add</b> operations
- * for the {@link Vector} with different initial number of items.
+ * to the middle of the {@link ArrayList} with different initial number of items.
  *
  * @author Dmitry Nichiporenko
  */
@@ -20,27 +19,29 @@ import java.util.concurrent.TimeUnit;
 @Warmup(time = 1, iterations = 3)
 @Measurement(time = 1, iterations = 5)
 @Fork(warmups = 0, value = 1)
-public class VectorAddBenchmark implements BasicList {
+public class ArrayListAddToMiddleBenchmark implements BasicList {
     private List<String> list;
-    private String[] items;
+    private String[] entriesToAdd;
 
-    @Param(value = {"0", "1", "1000", "100000", "1000000"})
+    @Param(value = {"1", "1000", "100000", "1000000"})
     private int numEntriesPrefilled;
 
     @Param(value = {"100000"})
     private int numEntriesToAdd;
 
-    @Setup(Level.Invocation)
-    public void preparePut() {
-        list = new Vector<>();
+    @Setup(Level.Iteration)
+    public void setup() {
+        list = new ArrayList<>();
         fillStringsList(list, numEntriesPrefilled);
-        items = generateStringsToAdd(numEntriesToAdd);
+        entriesToAdd = generateStringsToAdd(numEntriesToAdd);
     }
 
     @Benchmark
-    public void run(Blackhole bh) {
+    public void run() {
         for (int i = 0; i < numEntriesToAdd; i++) {
-            bh.consume(list.add(items[i]));
+            list.add(numEntriesPrefilled / 2, entriesToAdd[i]);
         }
     }
+
+
 }

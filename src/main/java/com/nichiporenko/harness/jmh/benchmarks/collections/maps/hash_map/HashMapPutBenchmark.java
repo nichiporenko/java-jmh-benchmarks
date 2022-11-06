@@ -40,9 +40,9 @@ public class HashMapPutBenchmark implements BasicMap {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
+    public void run(Blackhole bh) {
         for (int i = 0; i < entriesToAdd; i++) {
-            blackhole.consume(map.put(keys[i], COLLECTIONS_VALUE));
+            bh.consume(map.put(keys[i], COLLECTIONS_VALUE));
         }
     }
 }

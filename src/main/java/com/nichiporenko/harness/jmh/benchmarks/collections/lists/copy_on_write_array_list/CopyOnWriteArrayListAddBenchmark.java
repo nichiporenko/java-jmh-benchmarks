@@ -38,9 +38,9 @@ public class CopyOnWriteArrayListAddBenchmark implements BasicList {
     }
 
     @Benchmark
-    public void run(Blackhole blackhole) {
+    public void run(Blackhole bh) {
         for (int i = 0; i < numEntriesToAdd; i++) {
-            blackhole.consume(list.add(items[i]));
+            bh.consume(list.add(items[i]));
         }
     }
 }
